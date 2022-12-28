@@ -3,7 +3,9 @@ import React from 'react';
 const Favourites = () => {
     return (
         <div>
-            <p>favkokfprelgptllekg</p>
+           <div className='bg-light py-5 '>
+                <h2 className='text-center fs-1'>My Favourites</h2>
+            </div>
         </div>
     );
 };
