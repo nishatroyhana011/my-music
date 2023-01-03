@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import { type } from '@testing-library/user-event/dist/type';
+import React, { useEffect, useState } from 'react';
 import MusicCard from './MusicCard';
 
 const Search = () => {
 
-    const [word, setWord] = useState<string>('')
+    const [word, setWord] = useState<string>('');
+    const [playlistArray, setPlaylistArray]=useState([])
     //for autocomplete
     // const [selectedWord, setSelectedWord] = useState<resultWord[]>([])
      const [tracks, setTracks] = useState<song[]>([])
@@ -21,7 +23,7 @@ const Search = () => {
         },
         title:string,
     }
-
+   
     //api for auto complete
     // useEffect(() => {
     //     const options = {
@@ -57,6 +59,15 @@ const Search = () => {
     .then(data => setTracks(data.data))
     .catch(err => console.error(err));
     }
+    useEffect(()=>{
+        const list=localStorage.getItem('playlist');
+        let listArray=[];
+        if (list){
+            listArray=JSON.parse(list)
+        }
+        setPlaylistArray(listArray)
+          
+    },[])
 
     return (
         <div className=''>
@@ -74,10 +85,12 @@ const Search = () => {
                     </div> */}
                 </div>
             </div>
-            <div className='row'>
+            <div className='container'>
+            <div className='row d-flex justify-content-evenly'>
                 {
-                    tracks?.map((music) => <MusicCard key={music.id} song={music}></MusicCard>)
+                    tracks?.map((music) => <MusicCard key={music.id} song={music} playlistArray={playlistArray}></MusicCard>)
                 }
+            </div>
             </div>
         </div>
     );
